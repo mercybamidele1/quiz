@@ -1,0 +1,293 @@
+/* =========================================
+   1. COLORS (light theme is the default)
+   ========================================= */
+:root {
+  --page-bg: #eef2f7;
+  --card-bg: #ffffff;
+  --text: #14213d;
+  --text-muted: #5d6b85;
+  --border: #d6dde9;
+  --accent: #3b5bdb;
+  --correct: #1f9d55;
+  --wrong: #d6336c;
+  color-scheme: light;
+}
+
+/* Dark theme: used when the user's device prefers dark
+   (unless they picked light with the button) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page-bg: #0e1526;
+    --card-bg: #18223a;
+    --text: #eef2fb;
+    --text-muted: #9aa8c7;
+    --border: #2c3a5a;
+    --accent: #7c96ff;
+    --correct: #3ecf86;
+    --wrong: #ff6b9b;
+    color-scheme: dark;
+  }
+}
+
+/* Dark theme: used when the user picked dark with the button */
+:root[data-theme="dark"] {
+  --page-bg: #0e1526;
+  --card-bg: #18223a;
+  --text: #eef2fb;
+  --text-muted: #9aa8c7;
+  --border: #2c3a5a;
+  --accent: #7c96ff;
+  --correct: #3ecf86;
+  --wrong: #ff6b9b;
+  color-scheme: dark;
+}
+
+/* =========================================
+   2. BASE STYLES
+   ========================================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--page-bg);
+  color: var(--text);
+  font-family: Outfit, system-ui, sans-serif;
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px 20px 48px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Visible outline for keyboard users */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* =========================================
+   3. HEADER (subject name + theme button)
+   ========================================= */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 48px;
+  margin-bottom: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.brand-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.theme-button {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 14px;
+}
+
+/* =========================================
+   4. TEXT
+   ========================================= */
+h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+h1 strong {
+  font-weight: 700;
+}
+
+h2 {
+  margin: 0 0 24px;
+  font-size: clamp(1.4rem, 4.5vw, 2rem);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.intro {
+  margin: 0 0 28px;
+  color: var(--text-muted);
+}
+
+.question-count {
+  margin: 0 0 12px;
+  color: var(--text-muted);
+}
+
+/* =========================================
+   5. OPTION BUTTONS (subjects and answers)
+   ========================================= */
+.option-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  background: var(--card-bg);
+  box-shadow: 0 1px 0 var(--border);
+  font-size: 1.05rem;
+  text-align: left;
+}
+
+/* The letter box (A, B, C, D) on the left */
+.option-letter {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--page-bg);
+  font-weight: 600;
+}
+
+/* The "Correct" / "Wrong" label on the right */
+.option-result {
+  margin-left: auto;
+  font-weight: 700;
+}
+
+.option:hover:not(:disabled) .option-letter {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.option:disabled {
+  cursor: default;
+}
+
+/* Option states */
+.option.selected {
+  border-color: var(--accent);
+}
+.option.selected .option-letter {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.option.correct {
+  border-color: var(--correct);
+}
+.option.correct .option-letter {
+  background: var(--correct);
+  color: #ffffff;
+}
+
+.option.wrong {
+  border-color: var(--wrong);
+}
+.option.wrong .option-letter {
+  background: var(--wrong);
+  color: #ffffff;
+}
+
+/* =========================================
+   6. MAIN ACTION BUTTON
+   ========================================= */
+.action-button {
+  width: 100%;
+  margin-top: 16px;
+  padding: 16px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.action-button:hover {
+  filter: brightness(1.1);
+}
+
+.error-message {
+  min-height: 1.5em;
+  margin: 12px 0 0;
+  color: var(--wrong);
+  text-align: center;
+}
+
+/* =========================================
+   7. PROGRESS BAR
+   ========================================= */
+.progress-track {
+  height: 10px;
+  margin-top: 28px;
+  padding: 2px;
+  border-radius: 999px;
+  background: var(--card-bg);
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+
+/* =========================================
+   8. RESULTS SCREEN
+   ========================================= */
+.score-card {
+  margin-bottom: 16px;
+  padding: 28px;
+  border-radius: 18px;
+  background: var(--card-bg);
+  text-align: center;
+}
+
+.score-number {
+  display: block;
+  font-size: 4.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.score-card p {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+}
+
+/* Respect users who turn off animations */
+@media (prefers-reduced-motion: reduce) {
+  .progress-fill {
+    transition: none;
+  }
+}
